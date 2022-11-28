@@ -16,6 +16,7 @@
     display: flex;
 }
 #aside{
+    padding-left:0.5vw;
     height: 100%;
     width: 16vw;
     background-image: linear-gradient(to bottom,rgb(41, 40, 40), rgb(244, 176, 249) , rgb(181, 139, 249),rgb(0, 0, 0));
@@ -38,8 +39,8 @@ width: 9vw;
 background-image: linear-gradient(to bottom,rgb(41, 40, 40), rgb(98, 5, 78) , rgb(98, 0, 255),rgb(0, 0, 0));
 border-radius: 4px;
 color: white;
-position: relative;
-top:69vh;
+position:absolute;
+bottom:4vh;
 left:2vw;
 }
 #middle-page{
@@ -139,5 +140,10 @@ background-color: rgb(200, 249, 251);
 .stop-btn{
     color: red;
     font-size: 17px;
+    font-weight: bold;
+}
+li{
+    margin: 0px;
+    color: rgb(76, 6, 238);
     font-weight: bold;
 }

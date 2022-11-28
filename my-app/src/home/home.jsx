@@ -9,7 +9,8 @@ const Home = () => {
     const [taskBox, setTaskBox] = useState(false)
     const [userData, setuserData] = useState({})
     const [tasks, settasks] = useState([])
-    const [handleTask, sethandletask] = useState([])//to update the page once clilck
+    const [handleTask, sethandletask] = useState(null)//to update the page once clilck
+    // const [timer,setTimer]=useState(0)
     const navigator = useNavigate()
     const token = window.localStorage.getItem("token")
     const currentUSer = window.localStorage.getItem("user")
@@ -31,8 +32,10 @@ const Home = () => {
             .catch(err => {
                 console.log(err)
             })
-            
-    }, [userData])//handle click add new task unnecessary
+
+    }, [userData, handleTask])//handle click add new task unnecessary
+
+
 
     const logout = () => {
         window.localStorage.clear()
@@ -60,17 +63,28 @@ const Home = () => {
 
     const handleStartBtn = (e, id) => {
 
-        axios.post("http://localhost:5000/updateToStart", { id })
-            .then(res => {
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        const onGoing = tasks.filter(task => {
+            return task.status === "Ongoing"
+        })
+        console.log(onGoing)
+        if (onGoing.length==0) {
+            let startTime = new Date().getTime();
+            axios.post("http://localhost:5000/updateToStart", { id, time: startTime })
+                .then(res => {
+                })
+                .catch(err => {
+                    console.log(err)
+                })
 
             sethandletask(id)
+        }
+        else {
+            alert(`The task ${onGoing[0].activity} is Going on !`)
+        }
+
     }
     const handlePauseBtn = (e, id) => {
-        
+
 
 
     }
@@ -78,24 +92,35 @@ const Home = () => {
     const handleStoptBtn = (e, id) => {
         axios.post("http://localhost:5000/updateToComplete", { id })
             .then(res => {
-                
+
             })
             .catch(err => {
                 console.log(err)
             })
 
-            sethandletask(id)
+        sethandletask(id)
 
     }
-    // const ongoingTAsk=tasks.filter(task=>{
-    //     return task.status!="completed"
-    // })
-    // console.log(ongoingTAsk)
+
+    const completedTAsk = tasks.filter(task => {
+        return task.status === "completed"
+    })
+    // console.log(completedTAsk)
+    // console.log(handleTask)
     return (
         <>
             <div id="main-container">
                 <div id="aside">
                     <h1 id="task-completed">Tasks completed</h1>
+                    <div>
+                        {completedTAsk.map((ele) => {
+                            return (
+                                <>
+                                    <li>{ele.activity}   {ele.timetaken}</li>
+                                </>
+                            )
+                        })}
+                    </div>
                     <button id="logout-btn" onClick={logout}>Log out</button>
                 </div>
                 <div id="middle-page">
@@ -130,7 +155,7 @@ const Home = () => {
                                         <div>{task.timetaken}</div>
                                         <div>
                                             {
-                                                (task.action === "start") ? <p className="start-btn" onClick={(e) => handleStartBtn(e, task._id)}>{task.action}  <i class="fa fa-play-circle" aria-hidden="true"></i></p> :
+                                                (task.action === "start" || task.action === "") ? (task.action === "start") ? <p className="start-btn" onClick={(e) => handleStartBtn(e, task._id)}>{task.action}  <i class="fa fa-play-circle" aria-hidden="true"></i></p> : <p></p> :
                                                     <div className="start-pause-btn">
                                                         <p onClick={(e) => handlePauseBtn(e, task._id)} className="pause-btn">Pause <i class="fa fa-pause-circle" aria-hidden="true"></i></p>
                                                         <p onClick={(e) => handleStoptBtn(e, task._id)} className="stop-btn">Stop <i class="fa fa-stop-circle-o" aria-hidden="true"></i></p>

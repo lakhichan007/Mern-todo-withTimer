@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: rgb(202, 246, 246);
+}
+#main-container{
+    height: 75vh;
+    width: 80vw;
+    margin: 2vh auto;
+    padding: 4vh;
+    background-color: rgb(86, 5, 86);
+    display: flex;
+}
+#gif-box{
+    height: 100%;
+    width: 50%;
+}
+#gif-box>img{
+    height: 100%;
+    width: 100%;
+}
+#login-container{
+    height:100%;
+    width: 50%;
+    
+}

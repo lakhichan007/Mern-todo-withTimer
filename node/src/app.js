@@ -104,9 +104,9 @@ catch (err) {
 })
 
 app.post("/updateToStart", async(req,res)=>{
-    const {id}= req.body
+    const {id,time}= req.body
     try{
-        const currentTask= await Task.updateOne({_id:id},{$set:{action:"Ongoing",status:"Ongoing"}})
+        const currentTask= await Task.updateOne({_id:id},{$set:{action:"Ongoing",status:"Ongoing",time:time}})
     }
     catch (err) {
         res.json({
@@ -118,9 +118,36 @@ app.post("/updateToStart", async(req,res)=>{
 app.post("/updateToComplete", async(req,res)=>{
     const {id}= req.body
     try{
-        const currentTask= await Task.updateOne({_id:id},{$set:{action:"complete",status:"completed"}})
-        console.log("task complete")
-    }
+        let totalTime=""
+        let endTime=new Date().getTime()
+        const mytask= await Task.find({_id:id})
+        if(mytask[0].time){
+            let taskTimeTaken=endTime-(mytask[0].time)
+            let sec=parseInt(taskTimeTaken/1000)
+            if(sec>60){
+                var min= parseInt(sec/60);
+                sec=sec%60
+                
+                if(min>60){
+                    var hrs=parseInt(min/60)
+                    min=min%60
+                    
+                }
+                else{
+                    var hrs="00"
+                }
+            }
+            else{
+                var min="00";
+                var hrs="00"
+            }
+           
+            totalTime=`${hrs}:${min}:${sec}`
+        }
+        
+        const currentTask= await Task.updateOne({_id:id},{$set:{action:"",status:"completed",timetaken:totalTime}})
+        
+    }   
     catch (err) {
         res.json({
             message: err.message

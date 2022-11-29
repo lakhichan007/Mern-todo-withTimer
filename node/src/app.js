@@ -104,9 +104,13 @@ catch (err) {
 })
 
 app.post("/updateToStart", async(req,res)=>{
-    const {id,time}= req.body
+    const {id,time,user}= req.body
     try{
         const currentTask= await Task.updateOne({_id:id},{$set:{action:"Ongoing",status:"Ongoing",time:time}})
+        const allData=await Task.find({ref:user})
+    res.json({
+        message:allData
+    })
     }
     catch (err) {
         res.json({
@@ -116,7 +120,7 @@ app.post("/updateToStart", async(req,res)=>{
 })
 
 app.post("/updateToComplete", async(req,res)=>{
-    const {id}= req.body
+    const {id,user}= req.body
     try{
         let totalTime=""
         let endTime=new Date().getTime()
@@ -146,6 +150,10 @@ app.post("/updateToComplete", async(req,res)=>{
         }
         
         const currentTask= await Task.updateOne({_id:id},{$set:{action:"",status:"completed",timetaken:totalTime}})
+        const allData=await Task.find({ref:user})
+        res.json({
+            message:allData
+        })
         
     }   
     catch (err) {

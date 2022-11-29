@@ -33,6 +33,13 @@
     margin-top: 14vh;
     font-weight: bolder;
 }
+#task-complete-container{
+    border: 1px solid black;
+    margin-top: 0.5vh;
+    border-radius: 1vh;
+    background-color: darkgreen;
+    color: rgb(255, 0, 174);
+}
 #logout-btn{
 height: 4vh;
 width: 9vw;

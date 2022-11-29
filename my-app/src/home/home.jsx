@@ -9,8 +9,7 @@ const Home = () => {
     const [taskBox, setTaskBox] = useState(false)
     const [userData, setuserData] = useState({})
     const [tasks, settasks] = useState([])
-    const [handleTask, sethandletask] = useState(null)//to update the page once clilck
-    // const [timer,setTimer]=useState(0)
+    
     const navigator = useNavigate()
     const token = window.localStorage.getItem("token")
     const currentUSer = window.localStorage.getItem("user")
@@ -33,7 +32,7 @@ const Home = () => {
                 console.log(err)
             })
 
-    }, [userData, handleTask])//handle click add new task unnecessary
+    }, [userData])//handle click add new task unnecessary
 
 
 
@@ -66,17 +65,19 @@ const Home = () => {
         const onGoing = tasks.filter(task => {
             return task.status === "Ongoing"
         })
-        console.log(onGoing)
+        // console.log(onGoing)
         if (onGoing.length==0) {
             let startTime = new Date().getTime();
-            axios.post("http://localhost:5000/updateToStart", { id, time: startTime })
+            axios.post("http://localhost:5000/updateToStart", { id, time: startTime,user: currentUSer })
                 .then(res => {
+                    let allData = res.data.message
+                
+                settasks(allData)
                 })
                 .catch(err => {
                     console.log(err)
                 })
 
-            sethandletask(id)
         }
         else {
             alert(`The task ${onGoing[0].activity} is Going on !`)
@@ -90,15 +91,16 @@ const Home = () => {
     }
 
     const handleStoptBtn = (e, id) => {
-        axios.post("http://localhost:5000/updateToComplete", { id })
+        axios.post("http://localhost:5000/updateToComplete", { id,user: currentUSer })
             .then(res => {
 
+                let allData = res.data.message
+                // console.log(allData)
+                settasks(allData)
             })
             .catch(err => {
                 console.log(err)
             })
-
-        sethandletask(id)
 
     }
 
@@ -116,7 +118,7 @@ const Home = () => {
                         {completedTAsk.map((ele) => {
                             return (
                                 <>
-                                    <li>{ele.activity}   {ele.timetaken}</li>
+                                    <li id="task-complete-container">{ele.activity}   {ele.timetaken}</li>
                                 </>
                             )
                         })}

@@ -119,6 +119,70 @@ app.post("/updateToStart", async(req,res)=>{
     }
 })
 
+app.post("/updateToPause",async(req,res)=>{
+    const {id,user}= req.body
+    try{
+        let totalTime=""
+        let taskPauseAfter=""
+        let pauseTime=new Date().getTime()
+        const mytask= await Task.find({_id:id})
+        if(mytask[0].time){
+            let taskTimeTaken=pauseTime-(mytask[0].time)
+            taskPauseAfter=parseInt([taskTimeTaken])
+            let sec=parseInt(taskTimeTaken/1000)
+            if(sec>60){
+                var min= parseInt(sec/60);
+                sec=sec%60
+                
+                if(min>60){
+                    var hrs=parseInt(min/60)
+                    min=min%60
+                    
+                }
+                else{
+                    var hrs="00"
+                }
+            }
+            else{
+                var min="00";
+                var hrs="00"
+            }
+           
+            totalTime=`${hrs}:${min}:${sec}`
+        }
+        
+        const currentTask= await Task.updateOne({_id:id},{$set:{action:"continue",status:"paused",timetaken:totalTime,time:taskPauseAfter}})
+        const allData=await Task.find({ref:user})
+        res.json({
+            message:allData
+        })
+    }
+    catch (err) {
+        res.json({
+            message: err.message
+        })
+    }
+})
+
+app.post("/updateToResume",async(req,res)=>{
+    const {id,user}= req.body
+    try{
+        const mytask= await Task.find({_id:id})
+        let initialTime=parseInt(mytask[0].time)
+        let resumeTime= new Date().getTime()
+        let resumedTime=initialTime+resumeTime
+        const currentTask= await Task.updateOne({_id:id},{$set:{action:"Ongoing",status:"Ongoing",time:resumedTime}})
+        const allData=await Task.find({ref:user})
+        res.json({
+            message:allData
+        })
+    }
+    catch (err) {
+        res.json({
+            message: err.message
+        })
+    }
+})
 app.post("/updateToComplete", async(req,res)=>{
     const {id,user}= req.body
     try{

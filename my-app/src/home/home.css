@@ -4,11 +4,12 @@
     box-sizing:border-box;
 }
 #user{
-    border-radius: 4px;
-    padding: 2px 10px;
-    background-image: linear-gradient(to bottom, rgb(0, 204, 255),rgb(44, 2, 84));
+    display: flex;
     color: white;
     font-weight: bold;
+    font-size: 1vw;
+    align-items: center;
+    gap: 1vw;
 }
 #main-container{
     height: 100vh;
@@ -19,27 +20,24 @@
     padding-left:0.5vw;
     height: 100%;
     width: 16vw;
-    background-image: linear-gradient(to bottom,rgb(41, 40, 40), rgb(244, 176, 249) , rgb(181, 139, 249),rgb(0, 0, 0));
+    background-image: linear-gradient(to right,rgb(1, 1, 23),rgb(1, 1, 23));
     border-right: 2px solid grey;
 }
-#aside>img{
-    height: 100px;
-    width: 220px;
-    margin:50px 20px;
-    
-}
-#task-completed{
-    color:#0a020e;
-    margin-top: 14vh;
+#task-completed-heading{
+    color:#0f6405;
+    margin-top: 5vh;
+    font-size: 2vw;
     font-weight: bolder;
 }
 #task-complete-container{
-    border: 1px solid black;
-    margin-top: 0.5vh;
-    border-radius: 1vh;
-    background-color: darkgreen;
-    color: rgb(255, 0, 174);
+    max-height:80vh;
+    margin-left: 1vw;
+    color: white;
+    margin-top: 1vw;
+
+    
 }
+
 #logout-btn{
 height: 4vh;
 width: 9vw;
@@ -47,8 +45,8 @@ background-image: linear-gradient(to bottom,rgb(41, 40, 40), rgb(98, 5, 78) , rg
 border-radius: 4px;
 color: white;
 position:absolute;
-bottom:4vh;
-left:2vw;
+bottom:6vh;
+left:5vw;
 }
 #middle-page{
     height: 100%;
@@ -57,15 +55,19 @@ left:2vw;
 #header{
     width: 100%;
     height: 14%;
-    background-image: linear-gradient(to right,#ff4dff,#ff33cc,#ff4dff);
+    background-image: linear-gradient(to bottom,#110228,#1a0244,#1a0244,#1a0244,#1a0244,#110228);
     display: flex;
     justify-content:space-around;
     align-items: center;
+    color: white;
+}
+#todo-heading{
+    font-size: 3vw;
 }
 #header>img{
-    height: 100px;
-    width: 100px;
-    margin-left: 10vw;
+    height:7vw;
+    width: 7vw;
+    margin-left: 4vw;
 }
 #content{
 width: 100%;
@@ -74,7 +76,9 @@ border: 1px solid rebeccapurple;
 display: flex;
 flex-direction: column;
 align-items: center;
-background-color: rgb(200, 249, 251);
+background-image: url("./images/background.jpg");
+border: 1vw solid rgb(1, 1, 49);
+overflow-y: auto;
 }
 
 #table-head{
@@ -83,13 +87,12 @@ background-color: rgb(200, 249, 251);
     gap: 1px;
 }
 #add-btn{
-    position:absolute;
-    top: 18vh;
-    right: 10vw;
-    height: 25px;
-    width: 100px;
-    background-color: rgb(8, 201, 118 ,0.2);
-    color: brown;
+    position:relative;
+    left: 25vw;
+    top: 2vw;
+    padding: 0.2vw 0.72vw;
+    background-color: rgba(186, 193, 190, 0.2);
+    color: rgb(212, 8, 8);
     font-weight: bolder;
 }
 #task-popup{
@@ -98,20 +101,24 @@ background-color: rgb(200, 249, 251);
     position: absolute;
     border: 2px solid green;
     border-radius: 4px;
-    top: 18vh;
-    right: 20vw;
+    top: 20vh;
+    right: 25vw;
 
 }
 #table-head>div{
     width: 15vw;
-    height: 3.5vh;
+    height: 2vw;
     border: 1px solid black;
     background-color: rgb(130, 130, 249);
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
+    font-size: 1.25vw;
     font-weight: bolder;
+}
+#table-data-container{
+    
 }
 #table-data{
 
@@ -120,37 +127,44 @@ background-color: rgb(200, 249, 251);
     gap: 1px;
 }
 #table-data>div{
+    
     width: 15vw;
-    height: 3.5vh;
+    height: 2vw;
     border: 1px solid black;
     background-image:linear-gradient(to bottom,rgb(0, 64, 128), rgb(6, 43, 75));
     display: flex;
     justify-content: center;
     align-items: center;
     color: rgb(241, 245, 241);
+    font-size: 1.25vw;
 }
 .start-btn{
     color: rgb(13, 238, 13);
     font-size: 17px;
     font-weight: bold;
-    
+    font-size: 1.2vw;
 }
 .start-pause-btn{
     display: flex;
     gap: 1vw;
+    font-size: 1.2vw;
 }
 .pause-btn{
     color: gold;
     font-size: 17px;
     font-weight: bold;
+    font-size: 1.2vw;
 }
 .stop-btn{
     color: red;
     font-size: 17px;
     font-weight: bold;
+    font-size: 1.2vw;
 }
-li{
-    margin: 0px;
-    color: rgb(76, 6, 238);
-    font-weight: bold;
+
+.resume-btn{
+    color: rgb(255, 0, 187);
+    font-size: 17px;
+    font-weight: bold;   
+    font-size: 1.2vw;
 }

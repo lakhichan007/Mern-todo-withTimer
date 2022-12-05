@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
-// import "./login.css"
+import "./login.css"
 
 const Login = () => {
     const [user, setUser] = useState({})
@@ -30,8 +30,8 @@ const Login = () => {
         }
     }
     return (
-        <>
-            <div id="main-container">
+        <div id="main-container">
+            <div id="main-container-login">
                 <div id="gif-box">
                     <img src={require("./images/login.gif")} alt=""/>
                 </div>
@@ -43,11 +43,17 @@ const Login = () => {
                     <input type="password" placeholder="password" name="email"
                         onChange={(e) => (setUser({ ...user, password: e.target.value }))}
                     />
-                    <button onClick={oldUser}>Log In</button>
-                    <a href="/signUp">Sign UP</a>
+                    <button id="login-btm"  onClick={oldUser}>Log In</button>
+                    <div style={{display:"flex",gap:"1vw"}}>
+                        <p>Not Registered?</p>
+                        <a href="/signUp">Sign Up here...!</a>
+                    </div>
+                    
+                    
+                    
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 export default Login

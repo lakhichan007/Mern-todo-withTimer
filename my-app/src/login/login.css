@@ -2,19 +2,31 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: rgb(202, 246, 246);
 }
+
 #main-container{
-    height: 75vh;
-    width: 80vw;
-    margin: 2vh auto;
-    padding: 4vh;
-    background-color: rgb(86, 5, 86);
-    display: flex;
+width: 100vw;
+height: 100vh;
+background-image: url("./images/background.jpg");
+border:4vh solid rgb(1, 1, 40);
 }
+#main-container-login{
+    height: 70vh;
+    width: 64vw;
+    margin: 8vh auto;
+    padding: 4vh;
+    background-color: rgb(47, 5, 86);
+    display: flex;
+    border-radius:1vw;
+    box-shadow: 7px 5px rgb(22, 22, 22);
+}
+
 #gif-box{
     height: 100%;
     width: 50%;
+    border: 1vw solid rgb(48, 9, 71);
+    border-radius: 8px;
+    
 }
 #gif-box>img{
     height: 100%;
@@ -23,5 +35,38 @@
 #login-container{
     height:100%;
     width: 50%;
-    
+    display: flex;
+    gap: 4vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+}
+#login-container>input{
+    height: 2vw;
+    width: 16vw;
+    border: 1px solid rgb(3, 3, 78);
+    border-radius: 4px;
+
+}
+#login-btm{
+    height: 2vw;
+    width: 16vw;
+    border: 1px solid rgb(3, 3, 78);
+    border-radius: 4px;
+    background-color: darkblue;
+    color: white;
+}
+#login-btm:hover{
+    background-color: darkgreen;
+}
+
+#login-container>div>a{
+    text-decoration: none;
+    color: white;
+}
+#login-container>div>p{
+    color: rgb(245, 14, 14);
+}
+#login-container>h1{
+    color: darkcyan;
 }

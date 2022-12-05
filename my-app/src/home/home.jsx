@@ -52,7 +52,7 @@ const Home = () => {
                 status: "pending",
                 time: "",
                 action: "start",
-                timetaken: ""
+                timetaken: "00:00:00"
             }
             setuserData(newTask)
         }
@@ -85,11 +85,41 @@ const Home = () => {
 
     }
     const handlePauseBtn = (e, id) => {
+        axios.post("http://localhost:5000/updateToPause", { id,user: currentUSer })
+        .then(res => {
 
+            let allData = res.data.message
+            // console.log(allData)
+            settasks(allData)
+        })
+        .catch(err => {
+            console.log(err)
+        })
 
 
     }
+    const handleResumeBtn =(e,id)=>{
+        const onGoing = tasks.filter(task => {
+            return task.status === "Ongoing"
+        })
+        console.log(onGoing)
+        if (onGoing.length===0) {
+            axios.post("http://localhost:5000/updateToResume",{ id,user: currentUSer })
+                .then(res => {
+                    let allData = res.data.message
+                
+                settasks(allData)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
 
+        }
+        else {
+            alert(`The task ${onGoing[0].activity} is Going on !`)
+        }
+
+    }
     const handleStoptBtn = (e, id) => {
         axios.post("http://localhost:5000/updateToComplete", { id,user: currentUSer })
             .then(res => {
@@ -113,12 +143,14 @@ const Home = () => {
         <>
             <div id="main-container">
                 <div id="aside">
-                    <h1 id="task-completed">Tasks completed</h1>
+                {/* <img src={require("./images/history.webp")} style={{height:"10vh"}}/> */}
+                    <h1 id="task-completed-heading">Tasks completed</h1>
+                    
                     <div>
                         {completedTAsk.map((ele) => {
                             return (
                                 <>
-                                    <li id="task-complete-container">{ele.activity}   {ele.timetaken}</li>
+                                    <p id="task-complete-container">{ele.activity}   {ele.timetaken}</p>
                                 </>
                             )
                         })}
@@ -128,9 +160,10 @@ const Home = () => {
                 <div id="middle-page">
                     <div id="header">
                         <img src={require("./images/pic.png")} alt="" />
-                        <h1>My Todo list</h1>
-                        <span id="user">{currentUSer}</span>
+                        <h1 id="todo-heading">My Todo list</h1>
+                        <span id="user"><img src={require("./images/logo.png")} style={{ height:"40px",borderRadius:"18px"}} />   {currentUSer}</span>
                     </div>
+                    
                     <div id="content">
 
                         {taskBox ? <input id="task-popup" type="text" placeholder="add your task here" /> : <div></div>}
@@ -151,21 +184,24 @@ const Home = () => {
 
                             return (
                                 <>
+                                    <div id="table-data-container">
                                     <div id="table-data">
                                         <div>{task.activity}</div>
                                         <div>{task.status}</div>
                                         <div>{task.timetaken}</div>
                                         <div>
                                             {
+                                                (task.action==="continue")?<p onClick={(e)=>handleResumeBtn(e,task._id)} className="resume-btn">Resume <i class="fa fa-play-circle" aria-hidden="true"></i></p>:
                                                 (task.action === "start" || task.action === "") ? (task.action === "start") ? <p className="start-btn" onClick={(e) => handleStartBtn(e, task._id)}>{task.action}  <i class="fa fa-play-circle" aria-hidden="true"></i></p> : <p></p> :
                                                     <div className="start-pause-btn">
                                                         <p onClick={(e) => handlePauseBtn(e, task._id)} className="pause-btn">Pause <i class="fa fa-pause-circle" aria-hidden="true"></i></p>
-                                                        <p onClick={(e) => handleStoptBtn(e, task._id)} className="stop-btn">Stop <i class="fa fa-stop-circle-o" aria-hidden="true"></i></p>
+                                                        <p onClick={(e) => handleStoptBtn(e, task._id)} className="stop-btn">End <i class="fa fa-stop-circle-o" aria-hidden="true"></i></p>
                                                     </div>
                                             }
 
                                         </div>
 
+                                    </div>
                                     </div>
                                 </>
                             )
